@@ -18,7 +18,7 @@ function RickAndMorty() {
     setPage(page + 1);
   };
 
-  console.log(characters);
+//   console.log(characters);
 
   return (
     <>
@@ -29,12 +29,12 @@ function RickAndMorty() {
               <img
                 src={character.image}
                 alt={character.name}
-                className="w-full mb-4 rounded-lg"
+                className="w-full mb-4 rounded-lg transform transition-all duration-200 hover:scale-110"
               />
-              <h2 className="text-lg text-gray-800 font-medium mb-2">
+              <h1 className="text-xl text-gray-800 font-medium mb-2">
                 {character.name}
-              </h2>
-              <p className="text-gray-600">{character.species}</p>
+              </h1>
+              <p className="text-gray-600">{character.gender} - {character.species}</p>
               <p
                 className={
                   character.status === "Alive"
@@ -46,6 +46,10 @@ function RickAndMorty() {
               >
                 {character.status}
               </p>
+              <p className="text-gray-600/50">Last know location:</p>
+              <p>{character.location.name}</p>
+              <p className="text-gray-600/50">Origin :</p>
+              <p>{character.origin.name}</p>
             </div>
           </div>
         ))}
@@ -106,15 +110,7 @@ function RickAndMorty() {
 //       </div>
 //     ))}
 //   </div>
-//   <div className="flex justify-center">
-//     <button
-//       className="rounded-lg py-2 px-4 bg-indigo-500 text-white font-medium"
-//       onClick={handleLoadMore}
-//       disabled={isLoading}
-//     >
-//       {isLoading ? "Loading..." : "Load More"}
-//     </button>
-//   </div>
+
 // </div>
 
 export default RickAndMorty;

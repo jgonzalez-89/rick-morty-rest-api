@@ -2,7 +2,13 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.jsx"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'imgCharacters': "url('../public/images/characters.jpg')",
+        'imgPlanets': "url('../public/images/planets.jpg')",
+        'imgEpisodes': "url('../public/images/episodes.jpg')",
+      },
+    },
   },
   plugins: [],
-}
+};
