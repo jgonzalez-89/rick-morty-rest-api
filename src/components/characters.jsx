@@ -56,12 +56,13 @@ function RickAndMorty() {
       </div>
       <div className="flex justify-center">
         <button
-          className="rounded-lg py-2 px-4 bg-indigo-500 text-white font-medium"
+          className="px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 border-2 border-gray-900 rounded-lg"
           onClick={handleLoadMore}
           disabled={isLoading}
         >
           {isLoading ? "Loading..." : "Load More"}
         </button>
+
       </div>
     </>
   );
