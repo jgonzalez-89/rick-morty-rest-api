@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import Button from "../components/button";
 
 const NotFound = () => {
   return (
@@ -15,7 +16,7 @@ const NotFound = () => {
             type="button"
             className="bg-[#f96e4d] text-white mt-2 cursor-pointer font-black border-[0] p-[11px_22px] rounded-[10px]"
           >
-            GET ME HOME
+            GO HOME
           </button>
         </Link>
       </div>
