@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 import Button from "./button";
+import Modal from "./modal";
 
 const Navbar = () => {
   return (
@@ -29,9 +30,10 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="text-white text-right md:w-1/3">
-        <Link to="/" className="relative inline-block text-lg group">
+        <div><Modal /></div>
+        {/* <Link to="/" className="relative inline-block text-lg group">
           <Button text="Favorites" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

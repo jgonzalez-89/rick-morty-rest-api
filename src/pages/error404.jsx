@@ -28,7 +28,7 @@ const NotFound = () => {
           The page you are trying to search has been moved to another universe.
         </div>
         <div className="">
-          <Link to="/" className="relative inline-block text-lg group"><Button text="Go Home" /></Link>
+          <Link to="/"><Button text="Go Home" /></Link>
         </div>
       </div>
     </>

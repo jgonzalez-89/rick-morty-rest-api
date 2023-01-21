@@ -7,7 +7,6 @@ function RickAndMorty() {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -67,24 +66,25 @@ function RickAndMorty() {
                   <p>{character.location.name}</p>
                   <p className="text-gray-600/50">Origin :</p>
                   <p>{character.origin.name}</p>
-                  <div
+                  {/* <div
                     className="relative inline-block text-lg group cursor-pointer"
                     onClick={() => handleAddToFavorites(character)}
                   >
-                    <Button text="Favorites" />
-                  </div>
+                  </div> */}
+                  <Button onClick={() => handleAddToFavorites(character)} text="Favorites" />
+
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-center bg-gray-800 cursor-pointer">
-            <div
+            {/* <div
               className="relative inline-block text-lg group"
               onClick={handleLoadMore}
               disabled={isLoading}
             >
-              <Button text={isLoading ? "Loading..." : "Load More"} />
-            </div>
+            </div> */}
+            <Button disabled={isLoading} onClick={handleLoadMore} text={isLoading ? "Loading..." : "Load More"} />
           </div>
         </>
       )}
