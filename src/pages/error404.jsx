@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import error from "../assets/images/error404.png";
+import Button from "../components/button";
 
 const NotFound = () => {
   return (
     <>
       <div className="flex justify-center items-center sm:flex-col md:flex-row">
-        <div className="text-center text-10xl font-extrabold max-sm:text-5xl space-x-20">
+        <div className="text-center text-10xl font-extrabold max-sm:text-5xl">
           4
         </div>
         <div className="text-center  z-10">
@@ -18,16 +19,17 @@ const NotFound = () => {
             />
           </Link>
         </div>
-        <div className="text-center text-10xl font-extrabold max-sm:text-5xl space-x-2">
+        <div className="text-center text-10xl font-extrabold max-sm:text-5xl">
           4
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <Link to="/">
-          <button className="px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 border-2 border-gray-900 rounded-lg bg-white">
-            Go Home
-          </button>
-        </Link>
+      <div className="flex flex-col items-center justify-center">
+        <div className="p-10">
+          The page you are trying to search has been moved to another universe.
+        </div>
+        <div className="">
+          <Link to="/" className="relative inline-block text-lg group"><Button text="Go Home" /></Link>
+        </div>
       </div>
     </>
   );
