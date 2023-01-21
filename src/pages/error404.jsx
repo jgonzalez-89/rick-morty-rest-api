@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import error from "../images/error404.png";
+import error from "../assets/images/error404.png";
 
 const NotFound = () => {
   return (
     <>
       <div className="flex justify-center items-center sm:flex-col md:flex-row">
-        <div className="text-center text-10xl font-extrabold max-sm:text-5xl">
+        <div className="text-center text-10xl font-extrabold max-sm:text-5xl space-x-20">
           4
         </div>
         <div className="text-center  z-10">
@@ -18,7 +18,7 @@ const NotFound = () => {
             />
           </Link>
         </div>
-        <div className="text-center text-10xl font-extrabold max-sm:text-5xl">
+        <div className="text-center text-10xl font-extrabold max-sm:text-5xl space-x-2">
           4
         </div>
       </div>

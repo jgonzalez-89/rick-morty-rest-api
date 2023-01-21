@@ -8,10 +8,8 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'imgCharacters': "url('../public/images/characters.jpg')",
-        'imgPlanets': "url('../public/images/planets.jpg')",
-        'imgEpisodes': "url('../public/images/episodes.jpg')",
-        'imgLogo': "url('../public/images/logo.png')",
+        'imgCharacters': "url('../src/assets/images/characters.jpg')",
+        'imgLogo': "url('../src/assets/images/logo.png')",
       },
     },
   },

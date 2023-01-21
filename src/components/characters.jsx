@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import loader from "../images/loader.gif";
+import loader from "../assets/images/loader.gif";
 
 function RickAndMorty() {
   const [characters, setCharacters] = useState([]);
