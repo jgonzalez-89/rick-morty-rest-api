@@ -2,6 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import loader from "../assets/images/loader.gif";
 import Button from "./button";
+import Modal from "./modal";
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(state) {
+  return {
+    favorites: state.favorites
+  };
+}
+
+export const ConnectedRickAndMorty = connect(mapStateToProps)(RickAndMorty);
+
+
 
 function RickAndMorty() {
   const [characters, setCharacters] = useState([]);
@@ -26,8 +39,6 @@ function RickAndMorty() {
     setFavorites([...favorites, character]);
   };
 
-  console.log(favorites);
-
   return (
     <>
       {isLoading ? (
@@ -36,6 +47,7 @@ function RickAndMorty() {
         </div>
       ) : (
         <>
+          {/* <Modal favorites={favorites}/> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 bg-gray-800">
             {characters.map((character) => (
               <div key={character.id} className="p-4">
