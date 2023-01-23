@@ -1,14 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Characters from "./pages/characters";
-import Home from "./pages/home";
+import Characters from "./pages/charactersPage";
+import Home from "./pages/homePage";
 import Navbar from "./components/navbar";
-import NotFound from "./pages/Error404";
+import NotFound from "./pages/error404Page";
 
 
-function App() {
+function Routers() {
   return (
     <Router>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/characters" element={<Characters />} />
@@ -18,4 +17,4 @@ function App() {
   );
 }
 
-export default App;
+export default Routers;

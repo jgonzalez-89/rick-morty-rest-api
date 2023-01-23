@@ -4,7 +4,10 @@ import Logo from "../assets/images/logo.png";
 import Button from "./button";
 import Modal from "./modal";
 
-const Navbar = () => {
+const Navbar = ({ favorites, setFavorites }) => {
+
+  // console.log(favorites);
+
   return (
     <div className="flex flex-col md:flex-row md:justify-between bg-gray-800">
       <div>
@@ -15,13 +18,13 @@ const Navbar = () => {
       </div>
       <div className="text-white md:w-1/3">
         <Link to="/" className="relative inline-block text-lg group">
-          <Button text="Home" />
+          <Button type="button" text="Home" />
         </Link>
         <Link to="/characters" className="relative inline-block text-lg group">
-          <Button text="Characters" />
+          <Button type="button" text="Characters" />
         </Link>
         <Link to="/locations" className="relative inline-block text-lg group">
-          <Button text="Locations" />
+          <Button type="button" text="Locations" />
         </Link>
       </div>
       <div className="flex items-center justify-center md:w-1/3">
@@ -30,40 +33,12 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="text-white text-right md:w-1/3">
-        <div><Modal /></div>
-        {/* <Link to="/" className="relative inline-block text-lg group">
-          <Button text="Favorites" />
-        </Link> */}
+        <div>
+          <Modal favorites={favorites} setFavorites={setFavorites}/>
+        </div>
       </div>
     </div>
   );
 };
-
-// <nav className="bg-gray-800 p-2 flex">
-//   <div className="flex justify-center items-center">
-
-//     <button className="text-white mr-4">
-//       <Link to="/locations">Locations</Link>
-//     </button>
-//     <button className="text-white mr-4">
-//       <Link to="/episodes">Episodes</Link>
-//     </button>
-//   </div>
-//   <div className="flex">
-//     <form className="flex">
-//       <input
-//         type="text"
-//         placeholder="Search"
-//         className="bg-gray-700 p-2 rounded-lg text-white"
-//       />
-//       <button className="bg-indigo-500 p-2 rounded-lg text-white">
-//         Search
-//       </button>
-//     </form>
-//     <a href="#" className="text-white ml-4">
-//       Favorites
-//     </a>
-//   </div>
-// </nav>
 
 export default Navbar;

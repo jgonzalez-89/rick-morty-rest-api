@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import loader from "../assets/images/loader.gif";
 import Button from "./button";
-import Modal from "./modal";
-import { connect } from 'react-redux';
+import Navbar from "./navbar";
 
-
-function mapStateToProps(state) {
-  return {
-    favorites: state.favorites
-  };
-}
-
-export const ConnectedRickAndMorty = connect(mapStateToProps)(RickAndMorty);
-
-
-
-function RickAndMorty() {
+function Characters() {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,15 +26,17 @@ function RickAndMorty() {
     setFavorites([...favorites, character]);
   };
 
+  // console.log(favorites)
+
   return (
     <>
+      <Navbar favorites={favorites} setFavorites={setFavorites} />
       {isLoading ? (
         <div className="bg-gray-800 min-h-screen">
           <img src={loader} alt="Loading..." className="mx-auto" />
         </div>
       ) : (
         <>
-          {/* <Modal favorites={favorites}/> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 bg-gray-800">
             {characters.map((character) => (
               <div key={character.id} className="p-4">
@@ -78,25 +67,22 @@ function RickAndMorty() {
                   <p>{character.location.name}</p>
                   <p className="text-gray-600/50">Origin :</p>
                   <p>{character.origin.name}</p>
-                  {/* <div
-                    className="relative inline-block text-lg group cursor-pointer"
+                  <Button
+                    type="button"
                     onClick={() => handleAddToFavorites(character)}
-                  >
-                  </div> */}
-                  <Button onClick={() => handleAddToFavorites(character)} text="Favorites" />
-
+                    text="Favorites"
+                  />
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-center bg-gray-800 cursor-pointer">
-            {/* <div
-              className="relative inline-block text-lg group"
-              onClick={handleLoadMore}
+            <Button
+              type="button"
               disabled={isLoading}
-            >
-            </div> */}
-            <Button disabled={isLoading} onClick={handleLoadMore} text={isLoading ? "Loading..." : "Load More"} />
+              onClick={handleLoadMore}
+              text={isLoading ? "Loading..." : "Load More"}
+            />
           </div>
         </>
       )}
@@ -104,4 +90,4 @@ function RickAndMorty() {
   );
 }
 
-export default RickAndMorty;
+export default Characters;
