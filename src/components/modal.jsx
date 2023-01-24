@@ -5,18 +5,12 @@ function Modal({ favorites, setFavorites }) {
   const [showModal, setShowModal] = React.useState(false);
 
   const handleRemoveToFavorites = (character) => {
-    const updatedFavorites = favorites.filter(fav => fav.id !== character.id);
+    const updatedFavorites = favorites.filter((fav) => fav.id !== character.id);
     setFavorites(updatedFavorites);
   };
 
-  // const handleRemoveToFavorites = () => {
-  //   console.log(favorites);
-  //   // setFavorites()
-  // };
-
   let obj = favorites;
   let lenght = Object.keys(obj).length;
-  // console.log(lenght)
 
   return (
     <>
@@ -40,20 +34,22 @@ function Modal({ favorites, setFavorites }) {
                   />
                 </div>
                 {/*body*/}
-                <div className="relative flex-auto overflow-y-auto w-96 h-96 ">
+                <div className="relative flex-auto overflow-y-auto w-96 h-96">
                   {favorites.map((character) => (
-                    <div key={character.id} className="p-6">
+                    <div key={character.id} className="p-6 flex">
                       <img
                         src={character.image}
                         alt={character.name}
                         className="w-40 h-40 rounded-md"
                       />
-                      <p className=" text-gray-800">{character.name}</p>
-                      <Button
-                        type="button"
-                        onClick={() => handleRemoveToFavorites(character)}
-                        text="X"
-                      />
+                      <div className="ml-6">
+                        <p className=" text-gray-800">{character.name}</p>
+                        <Button
+                          type="button"
+                          onClick={() => handleRemoveToFavorites(character)}
+                          text="X"
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>

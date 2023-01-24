@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import loader from "../assets/images/loader.gif";
-import Button from "./button";
-import Navbar from "./navbar";
+import Button from "../components/button";
+import Navbar from "../components/navbar";
 
 function Characters() {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [info, setInfo] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,10 +25,12 @@ function Characters() {
   };
 
   const handleAddToFavorites = (character) => {
-    setFavorites([...favorites, character]);
+    setFavorites((prevFavorites) => [...prevFavorites, character]);
   };
 
-  // console.log(favorites)
+  const handleAddToInfo = (character) => {
+    setInfo(character);
+  };
 
   return (
     <>
@@ -55,23 +59,30 @@ function Characters() {
                   <p
                     className={
                       character.status === "Alive"
-                        ? "text-green-700 ml-2"
+                        ? "text-green-500 ml-2"
                         : character.status === "Dead"
-                        ? "text-red-700 ml-2"
-                        : "text-blue-700 ml-2"
+                        ? "text-red-500 ml-2"
+                        : "text-gray-500 ml-2"
                     }
                   >
                     {character.status}
                   </p>
                   <p className="text-gray-600/50">Last know location:</p>
                   <p>{character.location.name}</p>
-                  <p className="text-gray-600/50">Origin :</p>
-                  <p>{character.origin.name}</p>
-                  <Button
-                    type="button"
-                    onClick={() => handleAddToFavorites(character)}
-                    text="Favorites"
-                  />
+                  <div className="flex">
+                    <Button
+                      type="button"
+                      onClick={() => handleAddToFavorites(character)}
+                      text="Favorites"
+                    />
+                    <Link to="/info">
+                      <Button
+                        type="button"
+                        onClick={() => handleAddToInfo(character)}
+                        text="+ info"
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
