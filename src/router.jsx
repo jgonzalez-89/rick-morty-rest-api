@@ -3,7 +3,13 @@ import Characters from "./pages/characters";
 import Error404 from "./pages/error404";
 import Home from "./pages/home";
 
-function Routers() {
+import { useSelector } from "react-redux";
+
+function App() {
+  const propsState = useSelector(state => state.tasks)
+  console.log(propsState)
+
+
   return (
     <Router>
       <Routes>
@@ -16,4 +22,4 @@ function Routers() {
   );
 }
 
-export default Routers;
+export default App;
