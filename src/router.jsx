@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Characters from "./pages/characters";
 import Error404 from "./pages/error404";
 import Home from "./pages/home";
-
 import { useSelector } from "react-redux";
 
 function App() {

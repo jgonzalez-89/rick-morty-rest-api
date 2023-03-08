@@ -20,12 +20,12 @@ const Navbar = ({ favorites, setFavorites }) => {
         <Link to="/" className="relative inline-block text-lg group">
           <Button type="button" text="Home" />
         </Link>
-        <Link to="/characters" className="relative inline-block text-lg group">
+        {/* <Link to="/characters" className="relative inline-block text-lg group">
           <Button type="button" text="Characters" />
-        </Link>
-        <Link to="/locations" className="relative inline-block text-lg group">
+        </Link> */}
+        {/* <Link to="/locations" className="relative inline-block text-lg group">
           <Button type="button" text="Locations" />
-        </Link>
+        </Link> */}
       </div>
       <div className="flex items-center justify-center md:w-1/3">
         <Link to="/">

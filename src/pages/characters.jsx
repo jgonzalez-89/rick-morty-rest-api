@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HttpHandler } from "../http/handler";
 import loader from "../assets/images/loader.gif";
 import Button from "../components/button";
 import Navbar from "../components/navbar";
+
+const handler = new HttpHandler();
 
 function Characters() {
   const [characters, setCharacters] = useState([]);
@@ -13,11 +16,19 @@ function Characters() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
-      .then((res) => res.json())
-      .then((data) => setCharacters(characters.concat(data.results)))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+    async function testFunction() {
+      try {
+        const result = await handler.getCharacter(page);
+        setCharacters((prevCharacters) =>
+          prevCharacters.concat(result.results)
+        );
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    }
+    testFunction();
   }, [page]);
 
   const handleLoadMore = () => {
@@ -25,7 +36,10 @@ function Characters() {
   };
 
   const handleAddToFavorites = (character) => {
-    setFavorites((prevFavorites) => [...prevFavorites, character]);
+    const isDuplicate = favorites.some((fav) => fav.id === character.id);
+    if (!isDuplicate) {
+      setFavorites((prevFavorites) => [...prevFavorites, character]);
+    }
   };
 
   const handleAddToInfo = (character) => {
@@ -42,8 +56,8 @@ function Characters() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 bg-gray-800">
-            {characters.map((character) => (
-              <div key={character.id} className="p-4">
+            {characters.map((character, index) => (
+              <div key={index} className="p-4">
                 <div className="bg-white rounded-lg p-6">
                   <img
                     src={character.image}
@@ -75,13 +89,13 @@ function Characters() {
                       onClick={() => handleAddToFavorites(character)}
                       text="Favorites"
                     />
-                    <Link to="/info">
+                    {/* <Link to="/info">
                       <Button
                         type="button"
                         onClick={() => handleAddToInfo(character)}
                         text="+ info"
                       />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
