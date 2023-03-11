@@ -5,28 +5,16 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db, Character
-# from api.routes import api
 from api.admin import setup_admin
-# from api.commands import setup_commands
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required
-from flask_bcrypt import Bcrypt
 from datetime import timedelta
 
 
 ENV = os.getenv("FLASK_DEBUG")
 static_file_dir = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "../public/"
-)
+    os.path.dirname(os.path.realpath(__file__)), "../public/")
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
-app.url_map.strict_slashes = False
 
-# JWT Configuration
-app.config["JWT_SECRET_KEY"] = "jwt-secret-string"
-jwt = JWTManager(app)
-
-# database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url.replace(
@@ -39,27 +27,15 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
-# Allow CORS requests to this API
 CORS(app)
 
-# add the admin
 setup_admin(app)
-
-# add the admin
-# setup_commands(app)
-
-# Add all endpoints form the API with a "api" prefix
-# app.register_blueprint(api, url_prefix="/api")
-
-# Handle/serialize errors like a JSON object
 
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-
-# generate sitemap with all your endpoints
 
 @app.route('/characters', methods=['GET'])
 def get_characters():
@@ -76,25 +52,37 @@ def get_characters():
                'location_url': character.location_url,
                'image': character.image,
                'url': character.url} for character in characters]
-    return jsonify(result)
+    response = jsonify(result)
+    return response
+
 
 @app.route('/characters', methods=['POST'])
 def add_character():
     data = request.get_json()
-    character = Character(name=data['name'],
-                          status=data['status'],
-                          species=data['species'],
-                          type=data['type'],
-                          gender=data['gender'],
-                          origin_name=data['origin_name'],
-                          origin_url=data['origin_url'],
-                          location_name=data['location_name'],
-                          location_url=data['location_url'],
-                          image=data['image'],
-                          url=data['url'])
-    db.session.add(character)
+    favorites = data.get('favorites')
+    if not favorites:
+        return jsonify({'message': 'Favorites list is empty'})
+    
+    for fav in favorites:
+        character = Character(name=fav.get('name'),
+                              status=fav.get('status'),
+                              species=fav.get('species'),
+                              type=fav.get('type'),
+                              gender=fav.get('gender'),
+                              origin_name=fav.get('origin').get('name'), # Obtener el valor de name desde el objeto origin
+                              origin_url=fav.get('origin').get('url'), # Obtener el valor de url desde el objeto origin
+                              location_name=fav.get('location').get('name'),
+                              location_url=fav.get('location').get('url'),
+                              image=fav.get('image'),
+                              url=fav.get('url'))
+        db.session.add(character)
+        db.session.commit() # Guardar cada personaje en la base de datos
+
+    return jsonify({'message': 'Characters added successfully!'})
+    
     db.session.commit()
-    return jsonify({'message': 'Character added successfully!'})
+    return jsonify({'message': 'Characters added successfully!'})
+
 
 @app.route('/characters/<int:id>', methods=['PUT'])
 def update_character(id):
@@ -115,6 +103,7 @@ def update_character(id):
     character.url = data['url']
     db.session.commit()
     return jsonify({'message': 'Character updated successfully!'})
+
 
 @app.route('/characters/<int:id>', methods=['DELETE'])
 def delete_character(id):

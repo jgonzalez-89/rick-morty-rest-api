@@ -14,8 +14,6 @@ function Characters() {
   const [favorites, setFavorites] = useState([]);
   const [info, setInfo] = useState([]);
 
-  console.log(favorites);
-
   useEffect(() => {
     if (favorites.length > 0) {
       async function addCharacter() {
@@ -24,8 +22,10 @@ function Characters() {
             favorites: favorites,
           };
 
+          console.log('Payload:', payload);
+
           const result = await handler.postCharacter(payload);
-          console.log(result);
+          console.log('Response:', result);
         }
       }
 
