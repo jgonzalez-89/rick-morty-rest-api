@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User
+from api.models import db, Character
 # from api.routes import api
 from api.admin import setup_admin
 # from api.commands import setup_commands
@@ -61,56 +61,69 @@ def handle_invalid_usage(error):
 
 # generate sitemap with all your endpoints
 
-@app.route("/register", methods=["POST"])
-def register():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
+@app.route('/characters', methods=['GET'])
+def get_characters():
+    characters = Character.query.all()
+    result = [{'id': character.id,
+               'name': character.name,
+               'status': character.status,
+               'species': character.species,
+               'type': character.type,
+               'gender': character.gender,
+               'origin_name': character.origin_name,
+               'origin_url': character.origin_url,
+               'location_name': character.location_name,
+               'location_url': character.location_url,
+               'image': character.image,
+               'url': character.url} for character in characters]
+    return jsonify(result)
 
-    if not email or not password:
-        return jsonify({"message": "Missing email or password", "status": 400})
-
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return jsonify({"message": "Email already registered", "status": 400})
-
-    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-    new_user = User(email=email, hash=hashed_password)
-    db.session.add(new_user)
+@app.route('/characters', methods=['POST'])
+def add_character():
+    data = request.get_json()
+    character = Character(name=data['name'],
+                          status=data['status'],
+                          species=data['species'],
+                          type=data['type'],
+                          gender=data['gender'],
+                          origin_name=data['origin_name'],
+                          origin_url=data['origin_url'],
+                          location_name=data['location_name'],
+                          location_url=data['location_url'],
+                          image=data['image'],
+                          url=data['url'])
+    db.session.add(character)
     db.session.commit()
+    return jsonify({'message': 'Character added successfully!'})
 
-    # Generar el token de acceso
-    access_token = create_access_token(
-        identity=new_user.id, expires_delta=timedelta(minutes=30))
+@app.route('/characters/<int:id>', methods=['PUT'])
+def update_character(id):
+    character = Character.query.get(id)
+    if not character:
+        return jsonify({'message': 'Character not found!'})
+    data = request.get_json()
+    character.name = data['name']
+    character.status = data['status']
+    character.species = data['species']
+    character.type = data['type']
+    character.gender = data['gender']
+    character.origin_name = data['origin_name']
+    character.origin_url = data['origin_url']
+    character.location_name = data['location_name']
+    character.location_url = data['location_url']
+    character.image = data['image']
+    character.url = data['url']
+    db.session.commit()
+    return jsonify({'message': 'Character updated successfully!'})
 
-    return jsonify({
-        "message": "Registered successfully",
-        "access_token": access_token
-    })
-
-
-@app.route("/login", methods=["POST"])
-def login():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-
-    if not email or not password:
-        return jsonify({"message": "Missing email or password", "status": 400})
-
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"message": "User not found", "status": 404})
-
-    if not bcrypt.check_password_hash(user.hash, password):
-        return jsonify({"message": "Invalid email or password", "status": 401})
-
-    # Generar el token de acceso
-    access_token = create_access_token(
-        identity=user.id, expires_delta=timedelta(minutes=30))
-
-    return jsonify({
-        "message": "Logged in successfully",
-        "access_token": access_token
-    })
+@app.route('/characters/<int:id>', methods=['DELETE'])
+def delete_character(id):
+    character = Character.query.get(id)
+    if not character:
+        return jsonify({'message': 'Character not found!'})
+    db.session.delete(character)
+    db.session.commit()
+    return jsonify({'message': 'Character deleted successfully!'})
 
 
 @app.route("/")
