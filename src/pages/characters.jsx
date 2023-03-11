@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { HttpHandler } from "../http/handler";
-import loader from "../assets/images/loader.gif";
-import Button from "../components/button";
-import Navbar from "../components/navbar";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { HttpHandler } from '../http/handler';
+import loader from '../assets/images/loader.gif';
+import Button from '../components/button';
+import Navbar from '../components/navbar';
 
 const handler = new HttpHandler();
 
@@ -14,14 +14,31 @@ function Characters() {
   const [favorites, setFavorites] = useState([]);
   const [info, setInfo] = useState([]);
 
+  console.log(favorites);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      async function addCharacter() {
+        if (favorites.length > 0) {
+          const payload = {
+            favorites: favorites,
+          };
+
+          const result = await handler.postCharacter(payload);
+          console.log(result);
+        }
+      }
+
+      addCharacter();
+    }
+  }, [favorites]);
+
   useEffect(() => {
     setIsLoading(true);
     async function testFunction() {
       try {
         const result = await handler.getCharacter(page);
-        setCharacters((prevCharacters) =>
-          prevCharacters.concat(result.results)
-        );
+        setCharacters((prevCharacters) => prevCharacters.concat(result.results));
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -64,19 +81,13 @@ function Characters() {
                     alt={character.name}
                     className="w-full mb-4 rounded-lg transform transition-all duration-200 hover:scale-110"
                   />
-                  <h1 className="text-xl text-gray-800 font-medium mb-2">
-                    {character.name}
-                  </h1>
+                  <h1 className="text-xl text-gray-800 font-medium mb-2">{character.name}</h1>
                   <p className="text-gray-600">
                     {character.gender} - {character.species}
                   </p>
                   <p
                     className={
-                      character.status === "Alive"
-                        ? "text-green-500 ml-2"
-                        : character.status === "Dead"
-                        ? "text-red-500 ml-2"
-                        : "text-gray-500 ml-2"
+                      character.status === 'Alive' ? 'text-green-500 ml-2' : character.status === 'Dead' ? 'text-red-500 ml-2' : 'text-gray-500 ml-2'
                     }
                   >
                     {character.status}
@@ -84,30 +95,14 @@ function Characters() {
                   <p className="text-gray-600/50">Last know location:</p>
                   <p>{character.location.name}</p>
                   <div className="flex">
-                    <Button
-                      type="button"
-                      onClick={() => handleAddToFavorites(character)}
-                      text="Favorites"
-                    />
-                    {/* <Link to="/info">
-                      <Button
-                        type="button"
-                        onClick={() => handleAddToInfo(character)}
-                        text="+ info"
-                      />
-                    </Link> */}
+                    <Button type="button" onClick={() => handleAddToFavorites(character)} text="Favorites" />
                   </div>
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-center bg-gray-800 cursor-pointer">
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={handleLoadMore}
-              text={isLoading ? "Loading..." : "Load More"}
-            />
+            <Button type="button" disabled={isLoading} onClick={handleLoadMore} text={isLoading ? 'Loading...' : 'Load More'} />
           </div>
         </>
       )}
