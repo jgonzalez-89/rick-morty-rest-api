@@ -18,7 +18,7 @@ tasks:
       bash database.sh &&
       python docs/assets/greeting.py back
   - command: >
-      echo BACKEND_URL=$(gp url 3001) >> .env && 
+      echo VITE_BACKEND_URL=$(gp url 3001) >> .env && 
       npm install &&
       python docs/assets/greeting.py front
     openMode: split-right
