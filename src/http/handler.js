@@ -1,6 +1,7 @@
 export function HttpHandler() {
   const API_URL = 'https://rickandmortyapi.com/api/character?page=';
-  const API_BLOG = 'https://3001-jgonzalez89-rickmortyre-yblg1dyfqlv.ws-eu90.gitpod.io';
+  const API_BLOG = import.meta.env.VITE_BACKEND_URL;
+  // const API_BLOG = 'https://3001-jgonzalez89-rickmortyre-yblg1dyfqlv.ws-eu90.gitpod.io';
 
   async function getCharacter(page) {
     const response = await fetch(`${API_URL}${page}`, {

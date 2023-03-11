@@ -14,6 +14,8 @@ function Characters() {
   const [favorites, setFavorites] = useState([]);
   const [info, setInfo] = useState([]);
 
+  // console.log(import.meta.env.VITE_BACKEND_URL)
+
   useEffect(() => {
     if (favorites.length > 0) {
       async function addCharacter() {
