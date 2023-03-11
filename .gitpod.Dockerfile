@@ -24,4 +24,7 @@ USER gitpod
 RUN if ! grep -q "export PIP_USER=no" "$HOME/.bashrc"; then printf '%s\n' "export PIP_USER=no" >> "$HOME/.bashrc"; fi
 RUN echo "" >> $HOME/.bashrc
 RUN echo "unset DATABASE_URL" >> $HOME/.bashrc
-RUN echo "export VITE_DATABASE_URL=\$DATABASE_URL" >> $HOME/.bashrc
+RUN echo "export DATABASE_URL=\$DATABASE_URL" >> $HOME/.bashrc
+
+# set VITE_BACKEND_URL environment variable
+ENV VITE_BACKEND_URL=${BACKEND_URL}
