@@ -80,8 +80,8 @@ def add_character():
 
     return jsonify({'message': 'Characters added successfully!'})
     
-    db.session.commit()
-    return jsonify({'message': 'Characters added successfully!'})
+    # db.session.commit()
+    # return jsonify({'message': 'Characters added successfully!'})
 
 
 @app.route('/characters/<int:id>', methods=['PUT'])

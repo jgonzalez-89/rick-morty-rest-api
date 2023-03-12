@@ -11,7 +11,7 @@ export function HttpHandler() {
   }
 
   async function getCharacterBlog() {
-    const response = await fetch(`${API_BLOG}`, {
+    const response = await fetch(`${API_BLOG}/characters`, {
       method: 'GET',
     });
     return await response.json();

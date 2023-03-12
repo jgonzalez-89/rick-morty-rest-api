@@ -7,28 +7,27 @@ import Navbar from '../components/navbar';
 
 const handler = new HttpHandler();
 
-function Characters() {
+const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [info, setInfo] = useState([]);
 
-  // console.log(import.meta.env.VITE_BACKEND_URL)
+  console.log(favorites);
 
   useEffect(() => {
     if (favorites.length > 0) {
       async function addCharacter() {
-        if (favorites.length > 0) {
-          const payload = {
-            favorites: favorites,
-          };
+        const lastCharacter = favorites[favorites.length - 1];
+        const payload = {
+          favorites: [lastCharacter],
+        };
 
-          console.log('Payload:', payload);
+        console.log('Payload:', payload);
 
-          const result = await handler.postCharacter(payload);
-          console.log('Response:', result);
-        }
+        const result = await handler.postCharacter(payload);
+        console.log('Response:', result);
       }
 
       addCharacter();
@@ -58,11 +57,9 @@ function Characters() {
     const isDuplicate = favorites.some((fav) => fav.id === character.id);
     if (!isDuplicate) {
       setFavorites((prevFavorites) => [...prevFavorites, character]);
+    } else {
+      console.log('El personaje ya está en la lista de favoritos.');
     }
-  };
-
-  const handleAddToInfo = (character) => {
-    setInfo(character);
   };
 
   return (
