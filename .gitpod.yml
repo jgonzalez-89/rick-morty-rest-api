@@ -22,6 +22,8 @@ tasks:
       npm install &&
       python docs/assets/greeting.py front
     openMode: split-right
+  - command: npm run dev
+    openMode: split-right
 vscode:
   extensions:
     - esbenp.prettier-vscode
