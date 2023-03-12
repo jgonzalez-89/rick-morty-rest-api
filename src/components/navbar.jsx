@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 import Button from "./button";
 import Modal from "./modal";
 
-const Navbar = ({ favorites, setFavorites }) => {
-
-  // console.log(favorites);
+const Navbar = ({ favorites, setFavorites, showModal }) => {
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between bg-gray-800">
@@ -34,7 +32,7 @@ const Navbar = ({ favorites, setFavorites }) => {
       </div>
       <div className="text-white text-right md:w-1/3">
         <div>
-          <Modal favorites={favorites} setFavorites={setFavorites}/>
+        {showModal && <Modal favorites={favorites} setFavorites={setFavorites} />}
         </div>
       </div>
     </div>

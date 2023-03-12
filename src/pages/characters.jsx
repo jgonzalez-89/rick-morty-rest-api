@@ -14,7 +14,17 @@ const Characters = () => {
   const [favorites, setFavorites] = useState([]);
   const [info, setInfo] = useState([]);
 
-  console.log(favorites);
+  useEffect(() => {
+    async function fetchFavorites() {
+      try {
+        const result = await handler.getCharacterBlog();
+        setFavorites(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchFavorites();
+  }, []);
 
   useEffect(() => {
     if (favorites.length > 0) {
@@ -23,11 +33,7 @@ const Characters = () => {
         const payload = {
           favorites: [lastCharacter],
         };
-
-        console.log('Payload:', payload);
-
         const result = await handler.postCharacter(payload);
-        console.log('Response:', result);
       }
 
       addCharacter();
@@ -64,7 +70,7 @@ const Characters = () => {
 
   return (
     <>
-      <Navbar favorites={favorites} setFavorites={setFavorites} />
+      <Navbar favorites={favorites} setFavorites={setFavorites} showModal={true} />
       {isLoading ? (
         <div className="bg-gray-800 min-h-screen">
           <img src={loader} alt="Loading..." className="mx-auto" />
@@ -107,6 +113,6 @@ const Characters = () => {
       )}
     </>
   );
-}
+};
 
 export default Characters;

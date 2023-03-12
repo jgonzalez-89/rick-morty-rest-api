@@ -27,7 +27,7 @@ export function HttpHandler() {
   }
 
   async function putCharacterById(id, payload) {
-    const response = await fetch(`${API_BLOG}/${id}`, {
+    const response = await fetch(`${API_BLOG}/characters/${id}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
       headers: contentType,
@@ -35,9 +35,9 @@ export function HttpHandler() {
   }
 
   async function deleteCharacterById(id) {
-    const response = await fetch(`${API_BLOG}/${id}`, {
+    const response = await fetch(`${API_BLOG}/characters/${id}`, {
       method: 'DELETE',
-      headers: contentType,
+      headers: { 'Content-Type': 'application/json' },
     });
 
     return response.status === 200 ? true : false;

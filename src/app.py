@@ -62,26 +62,28 @@ def add_character():
     favorites = data.get('favorites')
     if not favorites:
         return jsonify({'message': 'Favorites list is empty'})
-    
+
     for fav in favorites:
+        origin = fav.get('origin')
+        location = fav.get('location')
+        if origin is None or location is None:
+            return jsonify({'message': 'Invalid favorites list'})
+
         character = Character(name=fav.get('name'),
                               status=fav.get('status'),
                               species=fav.get('species'),
                               type=fav.get('type'),
                               gender=fav.get('gender'),
-                              origin_name=fav.get('origin').get('name'), # Obtener el valor de name desde el objeto origin
-                              origin_url=fav.get('origin').get('url'), # Obtener el valor de url desde el objeto origin
-                              location_name=fav.get('location').get('name'),
-                              location_url=fav.get('location').get('url'),
+                              origin_name=origin.get('name'),
+                              origin_url=origin.get('url'),
+                              location_name=location.get('name'),
+                              location_url=location.get('url'),
                               image=fav.get('image'),
                               url=fav.get('url'))
         db.session.add(character)
-        db.session.commit() # Guardar cada personaje en la base de datos
+        db.session.commit()
 
     return jsonify({'message': 'Characters added successfully!'})
-    
-    # db.session.commit()
-    # return jsonify({'message': 'Characters added successfully!'})
 
 
 @app.route('/characters/<int:id>', methods=['PUT'])
