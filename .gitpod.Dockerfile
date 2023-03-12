@@ -25,3 +25,7 @@ RUN if ! grep -q "export PIP_USER=no" "$HOME/.bashrc"; then printf '%s\n' "expor
 RUN echo "" >> $HOME/.bashrc
 RUN echo "unset DATABASE_URL" >> $HOME/.bashrc
 RUN echo "export DATABASE_URL=\$DATABASE_URL" >> $HOME/.bashrc
+
+# Add the command to run `npm run dev` after installation of backend
+WORKDIR /workspace/backend
+RUN npm install && npm run dev
